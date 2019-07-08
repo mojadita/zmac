@@ -5,6 +5,10 @@
 # This way, software can be compiled in linux, Mac OS, and
 # FreeBSD.
 
+targets = zmac gendoc
+
+toclean = $(targets)
+
 CC=cc
 CXX=c++
 DEP=zmac.o mio.o doc.o zi80dis.o
@@ -15,6 +19,8 @@ VERSION=\"5jan2019\"
 CFLAGS+= -DVERSION="$(VERSION)"
 
 YACC = bison -y
+
+all: $(targets)
 
 zmac: doc.inl $(DEP)
 	$(CXX) -Wall $(CXXFLAGS) -o zmac $(DEP)

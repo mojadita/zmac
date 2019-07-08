@@ -11,6 +11,7 @@
 #include <dlfcn.h>
 #include <errno.h>
 #include <getopt.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -156,12 +157,29 @@ static void do_help(void)
 
 struct gd_obj *gd_new(char *name)
 {
-	void *dlfd = dlopen(name, RTLD_NOW | RTLD_GLOBAL);
+	void *dlfd = NULL;
+	if (name) {
+		static char *path[] = {
+			"./gendoc-%1$s.so",
+			"./.gendoc/gendoc-%1$s.so",
+			"%2$s/.gendoc/gendoc-%1$s.so",
+			"/lib/gendoc/gendoc-%1$s.so",
+		};
+		char buffer[PATH_MAX];
+		char *home = getenv("HOME");
+		int i;
+		for (i = 0; path[i]; i++) {
+			snprintf(buffer, sizeof buffer, path[i], name, home);
+			printf(F("trying %s\n"), buffer);
+			dlfd = dlopen(name, RTLD_LAZY | RTLD_GLOBAL);
+			if (dlfd) break;
+		}
+	} else {
+		dlfd = dlopen(NULL, RTLD_LAZY | RTLD_GLOBAL);
+	}
 	if (!dlfd) {
-		fprintf(stderr,
-			F("dlopen: %s: %s\n"),
-			name, dlerror());
-        goto err;
+		fprintf(stderr, F("dlopen: %s\n"), dlerror());
+		goto err_dlopen;
 	}
     struct gd_clss * gd_clss = dlsym(dlfd, driver_class_symbol);
     if (!gd_clss) {
@@ -200,7 +218,7 @@ err_malloc:
     free(obj);
 err_drvlib:
     dlclose(dlfd);
-err:
+err_dlopen:
     return NULL;
 } /*  gd_new */
 
