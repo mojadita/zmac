@@ -8,3 +8,5 @@ zmac.tab.c
 zmac.tab.h
 doc
 doc.inl
+gendoc
+gendoc.c

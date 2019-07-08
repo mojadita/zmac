@@ -9,6 +9,11 @@ CC=cc
 CXX=c++
 DEP=zmac.o mio.o doc.o zi80dis.o
 
+# GWP - keep track of version via hand-maintained date stamp.
+VERSION=\"5jan2019\"
+
+CFLAGS+= -DVERSION="$(VERSION)"
+
 YACC = bison -y
 
 zmac: doc.inl $(DEP)
