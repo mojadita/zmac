@@ -945,7 +945,7 @@ register usage.  Consider the following code fragment:
   
  _ex    af,af'_
   
- _ld    a',(hl')
+ _ld    a',(hl')_
   
  _rra'_
   

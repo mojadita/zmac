@@ -1,157 +1,233 @@
 /* gendoc-mdoc.c --- driver for gendoc.
  * Author: Luis Colorado <luiscoloradourcola@gmail.com>
- * Date: Tue Jul  9 09:35:42 EEST 2019
+ * Date: Tue Jul  9 14:42:24 EEST 2019
  * Copyright: (C) 2019 Luis Colorado.  All rights reserved.
  * License: BSD
  */
 
+#include <assert.h>
+#include <stdlib.h>
+
 #include "gendoc.h"
+
+struct mdoc_priv {
+	/* TODO: put all state information here.
+	 */
+};
 
 int mdoc_init(struct gd_obj *to_init)
 {
+	struct mdoc_priv *p;
+	to_init->gd_priv = p  = malloc(sizeof *p);
+	assert(to_init->gd_priv != NULL);
+
     /* TODO: implement */
     return -1;
 }
 
 char *mdoc_error(struct gd_obj *o)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return "unimplemented mdoc_error()";
 }
 
 void mdoc_end(struct gd_obj *o)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
 }
 
 int mdoc_h1(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_h2(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_h3(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_h4(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_h5(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_h6(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_t1(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_t2(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_t3(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_t4(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_t5(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_qt(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_hr(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_np(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_tt(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_zm(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_w(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_l(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_eol(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_fs(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_sp(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
 
 int mdoc_oth(struct gd_obj *o, char *s)
 {
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
+    /* TODO: implement */
+    return -1;
+}
+
+int mdoc_nbsp(struct gd_obj *o, char *s)
+{
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
+    /* TODO: implement */
+    return -1;
+}
+
+int mdoc_ext(struct gd_obj *o, char *s)
+{
+	struct mdoc_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
@@ -184,5 +260,7 @@ struct gd_clss drv_class = {
     .gd_fs = mdoc_fs,
     .gd_sp = mdoc_sp,
     .gd_oth = mdoc_oth,
+    .gd_nbsp = mdoc_nbsp,
+    .gd_ext = mdoc_ext,
 }; /* drv_class */
 /* EOF */

@@ -34,7 +34,13 @@ struct gd_obj *drvr = NULL;
 static char driver_class_symbol[] = DRIVER_CLASS_SYMBOL;
 static void do_help(void);
 
-#define Fn(_nm, ...) do{if (drvr && drvr->gd_clss && drvr->gd_clss->gd_##_nm && drvr->gd_clss->gd_##_nm(drvr, yytext,##__VA_ARGS__)) return 0;} while(0)
+#define Fn(_nm, ...) do{											\
+		if (   drvr													\
+			&& drvr->gd_clss										\
+			&& drvr->gd_clss->gd_##_nm								\
+			&& drvr->gd_clss->gd_##_nm(drvr, yytext,##__VA_ARGS__)) \
+			return 0;												\
+	} while(0)
 
 %}
 
@@ -51,15 +57,17 @@ t4				^"    "
 t5				^"     "
 qt				^\|
 hr				^--*
-tt				_[^_]*_
+tt				_[^_\n]*_
 zm				zmac
 w				[A-Za-z](-?[A-Za-z0-9])*
 np				\n([\ \t]*\n)+
 l				{w}@{w}
 eol				\n
 fs				[.?!][\ \t]+
+ext				\.{w}
 sp				[\ \t]+
-oth				.
+nbsp			#+
+oth				[\]\[\)\(\}\{\,\;\.\:\^\$]*
 
 %%
 
@@ -83,7 +91,9 @@ oth				.
 {l}					{ Fn(l); }
 {eol}				{ Fn(eol); }
 {fs}/[A-Z]			{ Fn(fs); }
+{ext}				{ Fn(ext); }
 {sp}				{ Fn(sp); }
+{nbsp}				{ Fn(nbsp); }
 {oth}				{ Fn(oth); }
 
 %%
@@ -340,6 +350,12 @@ int gd_def_oth(struct gd_obj *o, char *s)
 	return 0;
 }
 
+int gd_def_nbsp(struct gd_obj *o, char *s)
+{
+    E(nbsp); ECHO;
+	return 0;
+}
+
 struct gd_clss drv_class = {
     .gd_name = NULL,
     .gd_init = NULL,
@@ -366,4 +382,5 @@ struct gd_clss drv_class = {
 	.gd_eol = gd_def_eol,
 	.gd_sp = gd_def_sp,
 	.gd_oth = gd_def_oth,
+	.gd_nbsp = gd_def_nbsp,
 };

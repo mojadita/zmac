@@ -39,3 +39,5 @@ clean:
 	rm -f zmac.c doc.inl $(DEP)
 .c.so:
 	$(CC) $(CFLAGS) -fPIC --shared -o $@ $<
+
+$(mods_so): gendoc.h

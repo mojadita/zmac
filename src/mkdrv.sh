@@ -1,4 +1,4 @@
-FUNCS="h1 h2 h3 h4 h5 h6 t1 t2 t3 t4 t5 qt hr np tt zm w l eol fs sp oth"
+FUNCS="h1 h2 h3 h4 h5 h6 t1 t2 t3 t4 t5 qt hr np tt zm w l eol fs sp oth nbsp ext"
 
 for i
 do
@@ -15,22 +15,38 @@ do
  * License: BSD
  */
 
+#include <assert.h>
+#include <stdlib.h>
+
 #include "gendoc.h"
+
+struct ${i}_priv {
+	/* TODO: put all state information here.
+	 */
+};
 
 int ${i}_init(struct gd_obj *to_init)
 {
+	struct ${i}_priv *p;
+	to_init->gd_priv = p  = malloc(sizeof *p);
+	assert(to_init->gd_priv != NULL);
+
     /* TODO: implement */
     return -1;
 }
 
 char *${i}_error(struct gd_obj *o)
 {
+	struct ${i}_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return "unimplemented ${i}_error()";
 }
 
 void ${i}_end(struct gd_obj *o)
 {
+	struct ${i}_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
 }
 EOF1
@@ -41,6 +57,8 @@ EOF1
 
 int ${i}_${j}(struct gd_obj *o, char *s)
 {
+	struct ${i}_priv *p = o->gd_priv;
+	assert(o->gd_priv != NULL);
     /* TODO: implement */
     return -1;
 }
