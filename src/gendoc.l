@@ -136,6 +136,11 @@ int main(int argc, char **argv)
 				continue;
 			}
 			yylex();
+			if (   drvr
+				&& drvr->gd_clss
+				&& drvr->gd_clss->gd_end) {
+				drvr->gd_clss->gd_end(drvr);
+			}
 			fclose(yyin);
 		}
 	} else {
@@ -336,7 +341,7 @@ int gd_def_oth(struct gd_obj *o, char *s)
 }
 
 struct gd_clss drv_class = {
-    .gd_name = "",
+    .gd_name = NULL,
     .gd_init = NULL,
     .gd_error = NULL,
     .gd_end = NULL,
