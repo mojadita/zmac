@@ -34,8 +34,9 @@ struct gd_clss {
 	_CB(h1); _CB(h2); _CB(h3); _CB(h4); _CB(h5);
 	_CB(h6); _CB(t1); _CB(t2); _CB(t3); _CB(t4);
 	_CB(t5); _CB(qt); _CB(hr); _CB(np); _CB(tt);
-	_CB(zm); _CB(w);  _CB(l);  _CB(eol); _CB(oth);
-#undef CB
+	_CB(zm); _CB(w);  _CB(l);  _CB(eol); _CB(fs);
+    _CB(sp); _CB(oth);
+#undef _CB
 };
 
 /* this macro is a convenience to printf(3) formats, to allow to

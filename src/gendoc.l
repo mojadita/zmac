@@ -24,7 +24,7 @@
 #error VERSION undefined, you must define VERSION in your CFLAGS
 #endif
 
-#define E(id)	printf("<<%s>>", #id)
+#define E(id)	printf("<%s>", #id)
 
 int flags = 0;
 char *format = NULL;
@@ -33,6 +33,8 @@ struct gd_obj *drvr = NULL;
 
 static char driver_class_symbol[] = DRIVER_CLASS_SYMBOL;
 static void do_help(void);
+
+#define Fn(_nm, ...) do{if (drvr && drvr->gd_clss && drvr->gd_clss->gd_##_nm && drvr->gd_clss->gd_##_nm(drvr, yytext,##__VA_ARGS__)) return 0;} while(0)
 
 %}
 
@@ -56,31 +58,33 @@ np				\n([\ \t]*\n)+
 l				{w}@{w}
 eol				\n
 fs				[.?!][\ \t]+
+sp				[\ \t]+
 oth				.
 
 %%
 
-{h1}				{ E(h1); }
-{h2}				{ E(h2); }
-{h3}				{ E(h3); }
-{h4}				{ E(h4); }
-{h5}				{ E(h5); }
-{h6}				{ E(h6); }
-{t1}				{ E(t1); }
-{t2}				{ E(t2); }
-{t3}				{ E(t3); }
-{t4}				{ E(t4); }
-{t5}				{ E(t5); }
-{qt}				{ E(qt); }
-{hr}				{ E(hr); }
-{tt}				{ E(tt); }
-{zm}				{ E(zmac); }
-{w}					{ printf("%s", yytext); }
-{np}				{ E(np); ECHO; }
-{l}					{ E(L); ECHO; E(l); }
-{eol}				{ E(eol); ECHO; }
-{fs}/[A-Z]			{ ECHO; E(fs); }
-{oth}				{ E(oth); ECHO; }
+{h1}				{ Fn(h1); }
+{h2}				{ Fn(h2); }
+{h3}				{ Fn(h3); }
+{h4}				{ Fn(h4); }
+{h5}				{ Fn(h5); }
+{h6}				{ Fn(h6); }
+{t1}				{ Fn(t1); }
+{t2}				{ Fn(t2); }
+{t3}				{ Fn(t3); }
+{t4}				{ Fn(t4); }
+{t5}				{ Fn(t5); }
+{qt}				{ Fn(qt); }
+{hr}				{ Fn(hr); }
+{np}				{ Fn(np); }
+{tt}				{ Fn(tt); }
+{zm}				{ Fn(zm); }
+{w}					{ Fn(w); }
+{l}					{ Fn(l); }
+{eol}				{ Fn(eol); }
+{fs}/[A-Z]			{ Fn(fs); }
+{sp}				{ Fn(sp); }
+{oth}				{ Fn(oth); }
 
 %%
 
@@ -112,7 +116,6 @@ int main(int argc, char **argv)
 	}
 
     drvr = gd_new(format);
-
     if (!drvr) {
         /* no need to print an error, as it has already been done. */
         exit(EXIT_FAILURE);
@@ -164,6 +167,7 @@ struct gd_obj *gd_new(char *name)
 			"./.gendoc/gendoc-%1$s.so",
 			"%2$s/.gendoc/gendoc-%1$s.so",
 			"/lib/gendoc/gendoc-%1$s.so",
+			NULL,
 		};
 		char buffer[PATH_MAX];
 		char *home = getenv("HOME");
@@ -171,10 +175,11 @@ struct gd_obj *gd_new(char *name)
 		for (i = 0; path[i]; i++) {
 			snprintf(buffer, sizeof buffer, path[i], name, home);
 			printf(F("trying %s\n"), buffer);
-			dlfd = dlopen(name, RTLD_LAZY | RTLD_GLOBAL);
+			dlfd = dlopen(buffer, RTLD_LAZY | RTLD_GLOBAL);
 			if (dlfd) break;
 		}
 	} else {
+		fprintf(stderr, F("trying default driver\n"));
 		dlfd = dlopen(NULL, RTLD_LAZY | RTLD_GLOBAL);
 	}
 	if (!dlfd) {
@@ -225,83 +230,83 @@ err_dlopen:
 /* DEFAULT DRIVER */
 int gd_def_h1(struct gd_obj *o, char *s)
 {
-    printf("#");
+    E(h1); ECHO;
 	return 0;
 }
 
 int gd_def_h2(struct gd_obj *o, char *s)
 {
-    printf("##");
+    E(h1); ECHO;
 	return 0;
 }
 int gd_def_h3(struct gd_obj *o, char *s)
 {
-    printf("###");
+    E(h1); ECHO;
 	return 0;
 }
 int gd_def_h4(struct gd_obj *o, char *s)
 {
-    printf("####");
+    E(h1); ECHO;
 	return 0;
 }
 int gd_def_h5(struct gd_obj *o, char *s)
 {
-    printf("#####");
+    E(h1); ECHO;
 	return 0;
 }
 int gd_def_h6(struct gd_obj *o, char *s)
 {
-    printf("######");
+    E(h1); ECHO;
 	return 0;
 }
 int gd_def_t1(struct gd_obj *o, char *s)
 {
-    E(t1);
+    E(t1); ECHO;
 	return 0;
 }
 int gd_def_t2(struct gd_obj *o, char *s)
 {
-    E(t2);
+    E(t2); ECHO;
 	return 0;
 }
 int gd_def_t3(struct gd_obj *o, char *s)
 {
-    E(t3);
+    E(t3); ECHO;
 	return 0;
 }
 int gd_def_t4(struct gd_obj *o, char *s)
 {
-    E(t4);
+    E(t4); ECHO;
 	return 0;
 }
 int gd_def_t5(struct gd_obj *o, char *s)
 {
-    E(t5);
+    E(t5); ECHO;
 	return 0;
 }
 int gd_def_qt(struct gd_obj *o, char *s)
 {
-    E(qt);
+    E(qt); ECHO;
 	return 0;
 }
 int gd_def_hr(struct gd_obj *o, char *s)
 {
-    E(hr);
+    E(hr); ECHO;
 	return 0;
 }
 int gd_def_tt(struct gd_obj *o, char *s)
 {
-    E(tt);
+    E(tt); ECHO;
 	return 0;
 }
 int gd_def_zm(struct gd_obj *o, char *s)
 {
-    E(zmac);
+    E(zmac); ECHO;
 	return 0;
 }
 int gd_def_w(struct gd_obj *o, char *s)
 {
-    printf("%s", s);
+	E(w); ECHO;
 	return 0;
 }
 int gd_def_np(struct gd_obj *o, char *s)
@@ -311,12 +316,17 @@ int gd_def_np(struct gd_obj *o, char *s)
 }
 int gd_def_l(struct gd_obj *o, char *s)
 {
-    E(L); ECHO; E(l);
+    E(l); ECHO;
 	return 0;
 }
 int gd_def_eol(struct gd_obj *o, char *s)
 {
     E(eol); ECHO;
+	return 0;
+}
+int gd_def_sp(struct gd_obj *o, char *s)
+{
+    E(sp); ECHO;
 	return 0;
 }
 int gd_def_oth(struct gd_obj *o, char *s)
@@ -349,5 +359,6 @@ struct gd_clss drv_class = {
 	.gd_w = gd_def_w,
 	.gd_l = gd_def_l,
 	.gd_eol = gd_def_eol,
+	.gd_sp = gd_def_sp,
 	.gd_oth = gd_def_oth,
 };

@@ -5,7 +5,10 @@
 # This way, software can be compiled in linux, Mac OS, and
 # FreeBSD.
 
-targets = zmac gendoc
+mods != sh -c "echo gendoc-*.c"
+mods_so = $(mods:.c=.so)
+
+targets = zmac gendoc $(mods_so)
 
 toclean = $(targets)
 
@@ -22,6 +25,8 @@ YACC = bison -y
 
 all: $(targets)
 
+.SUFFIXES: .c .o .so
+
 zmac: doc.inl $(DEP)
 	$(CXX) -Wall $(CXXFLAGS) -o zmac $(DEP)
 
@@ -31,3 +36,5 @@ doc.inl: doc.c doc.txt
 
 clean:
 	rm -f zmac.c doc.inl $(DEP)
+.c.so:
+	$(CC) $(CFLAGS) -fPIC --shared -o $@ $<

@@ -1,4 +1,5 @@
 *.o
+*.so
 y.tab.c
 y.tab.h
 zmac
