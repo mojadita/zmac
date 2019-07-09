@@ -11,6 +11,7 @@ mods_so = $(mods:.c=.so)
 targets = zmac gendoc $(mods_so)
 
 toclean = $(targets)
+toclean += $(mods_so)
 
 CC=cc
 CXX=c++

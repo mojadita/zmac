@@ -5,158 +5,186 @@
  * License: BSD
  */
 
+#include <stdlib.h>
+
 #include "gendoc.h"
 
 struct html_data {
 	int h_status;
+	char *h_errmsg;
 };
 
 int html_init(struct gd_obj *to_init)
 {
-    /* TODO: implement */
-	to_init->gd_priv = malloc(sizeof(struct html_data));
-    return -1;
+	struct html_data *p;
+	to_init->gd_priv = p = malloc(sizeof *p);
+	p->h_status = 0;
+	p->h_errmsg = NULL;
+    return 0;
 }
 
 char *html_error(struct gd_obj *o)
 {
-    /* TODO: implement */
-    return "unimplemented html_error()";
+	struct html_data *p = o->gd_priv;
+	return p->h_errmsg ? p->h_errmsg : "NO ERROR" ;
 }
 
 void html_end(struct gd_obj *o)
 {
-    /* TODO: implement */
+	struct html_data *p = o->gd_priv;
+	if (p) free(p);
 }
 
 int html_h1(struct gd_obj *o, char *s)
 {
-    /* TODO: implement */
+	struct html_data *p = o->gd_priv;
+	
     return -1;
 }
 
 int html_h2(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_h3(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_h4(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_h5(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_h6(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_t1(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_t2(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_t3(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_t4(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_t5(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_qt(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_hr(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_np(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_tt(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_zm(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_w(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_l(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_eol(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_fs(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_sp(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
 
 int html_oth(struct gd_obj *o, char *s)
 {
+	struct html_data *p = o->gd_priv;
     /* TODO: implement */
     return -1;
 }
