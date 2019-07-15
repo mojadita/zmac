@@ -8,6 +8,8 @@
 #ifndef _GENDOC_H
 #define _GENDOC_H
 
+#include <stdio.h>
+
 #ifdef _CB
 #error _CB clashes with the definition used here.
 #endif
@@ -16,6 +18,7 @@ struct gd_obj {
 	struct gd_clss  *gd_clss; /* virtual functions */
 	void            *gd_dlfd; /* from dlopen */
 	void			*gd_priv; /* private info */
+	FILE			*gd_ofile; /* output file */
 	/* this can be extended in the different drivers
 	 * for storage of private data. */
 };
@@ -51,6 +54,7 @@ struct gd_clss {
 /* configuration flags. For the flags glolbal variable. */
 #define FLAG_HELP		(1 << 0)
 #define FLAG_VERSION	(1 << 1)
+#define FLAG_OUTFN		(1 << 2)
 
 extern int flags; /* flags global variable */
 

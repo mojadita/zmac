@@ -10,9 +10,20 @@
 
 #include "gendoc.h"
 
+enum tags {
+	 TAG_NONE, TAG_MARK,
+	 TAG_H1, TAG_H2, TAG_H3, TAG_H4, TAG_H5, TAG_H6,
+}; /* tags */
+
+struct nest {
+	int type;
+	struct nest *next;
+};
+
 struct html_priv {
 	/* TODO: put all state information here.
 	 */
+	struct nest *top;
 };
 
 int html_init(struct gd_obj *to_init)
@@ -21,8 +32,8 @@ int html_init(struct gd_obj *to_init)
 	to_init->gd_priv = p  = malloc(sizeof *p);
 	assert(to_init->gd_priv != NULL);
 
-    /* TODO: implement */
-    return -1;
+	p->top = NULL;
+    return 0;
 }
 
 char *html_error(struct gd_obj *o)

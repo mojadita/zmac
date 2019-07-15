@@ -28,6 +28,7 @@
 
 int flags = 0;
 char *format = NULL;
+char *out_filename = NULL;
 
 struct gd_obj *drvr = NULL;
 
@@ -107,11 +108,14 @@ int main(int argc, char **argv)
 {
 	int op;
 
-	while ((op = getopt(argc, argv, "f:hv")) != EOF) {
+	while ((op = getopt(argc, argv, "f:hvo:")) != EOF) {
 		switch (op) {
 		case 'f': format = optarg; break;
 		case 'h': flags |= FLAG_HELP; break;
 		case 'v': flags |= FLAG_VERSION; break;
+		case 'o': flags |= FLAG_OUTFN;
+				  out_filename = optarg;
+				  break;
 		}
 	} /* while */
 
@@ -130,6 +134,16 @@ int main(int argc, char **argv)
         /* no need to print an error, as it has already been done. */
         exit(EXIT_FAILURE);
     }
+
+	drvr->gd_ofile = flags & FLAG_OUTFN
+		? fopen(out_filename, "wt")
+		: stdout;  /* this is always != NULL, so the next test is safe. */
+	if (!drvr->gd_ofile) {
+		fprintf(stderr,
+			F("fopen: %s: %s\n"),
+			out_filename, strerror(errno));
+		exit(EXIT_FAILURE);
+	}
 
 	argc -= optind;
 	argv += optind;
